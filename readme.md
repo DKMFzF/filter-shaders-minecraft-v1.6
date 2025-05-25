@@ -21,7 +21,7 @@ The shader implements
 ![](./docs/contrast.png)
 
 ## Brightness
-![](./docs/Brightness.png)
+![](./docs/brightness.png)
 
 ## Saturation
 ![](./docs/saturation.png)
