@@ -5,6 +5,13 @@ The shader implements
 - filter settings panel
 - RGB channel management
 
+## How to use?
+- Download OptiFine and throw it in the mods folder
+- download the repository .zip
+- log in to .minecraft
+- log in to the game and select shaders 'filters-minecraft-shader
+'
+
 ## Sepia
 ![](./docs/sepia.png)
 
