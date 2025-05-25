@@ -1,4 +1,4 @@
-# Lightweight maincraft shaders
+# Lightweight maincraft filter shaders
 
 ## Sepia
 ![](./docs/sepia.png)
@@ -23,4 +23,3 @@
 
 ## Blur
 ![](./docs/blur.png)
-
