@@ -1,5 +1,10 @@
 # Lightweight maincraft filter shaders
 
+The shader implements 
+- primitive shadows
+- filter settings panel
+- RGB channel management
+
 ## Sepia
 ![](./docs/sepia.png)
 
