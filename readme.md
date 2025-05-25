@@ -1,10 +1,26 @@
 # Lightweight maincraft shaders
 
 ## Sepia
-![](./docs/sepia_screenshot.png)
+![](./docs/sepia.png)
 
 ## Black and white filter
-![](./docs/gray_screeshot.png)
+![](./docs/gray.png)
 
 ## Invert
-![](./docs/invert_screenshot.png)
+![](./docs/invert.png)
+
+## Grain
+![](./docs/grain.png)
+
+## Contrast
+![](./docs/contrast.png)
+
+## Brightness
+![](./docs/Brightness.png)
+
+## Saturation
+![](./docs/saturation.png)
+
+## Blur
+![](./docs/blur.png)
+
