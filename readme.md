@@ -1,1 +1,1 @@
-# Lightweight maincraft shaders
+# Filters minecraft shaders
