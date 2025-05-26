@@ -13,25 +13,25 @@ The shader implements
 '
 
 ## Sepia
-![](./docs/sepia.png)
+![](./filter-shader-documentation/docs/sepia.png)
 
 ## Black and white filter
-![](./docs/gray.png)
+![](./filter-shader-documentation/docs/gray.png)
 
 ## Invert
-![](./docs/invert.png)
+![](./filter-shader-documentation/docs/invert.png)
 
 ## Grain
-![](./docs/grain.png)
+![](./filter-shader-documentation/docs/grain.png)
 
 ## Contrast
-![](./docs/contrast.png)
+![](./filter-shader-documentation/docs/contrast.png)
 
 ## Brightness
-![](./docs/brightness.png)
+![](./filter-shader-documentation/docs/brightness.png)
 
 ## Saturation
-![](./docs/saturation.png)
+![](./filter-shader-documentation/docs/saturation.png)
 
 ## Blur
-![](./docs/blur.png)
+![](./filter-shader-documentation/docs/blur.png)
