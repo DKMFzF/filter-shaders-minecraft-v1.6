@@ -1,6 +1,7 @@
 // buffers
 #define SKY_DARK 0 // [0 1]
 #define RED_SUN 0 // [0 1]
+#define RED_CLOUDS 0 // [0 1]
 
 // colors
 #define BLUE_AMOUNT 0.25 //[0.0 0.25 0.5 0.75 1.0]
