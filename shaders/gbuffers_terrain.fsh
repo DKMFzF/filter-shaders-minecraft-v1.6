@@ -15,6 +15,10 @@ varying vec2 lmcoord;
 varying vec2 texcoord;
 varying vec4 glcolor;
 varying vec4 shadowPos;
+varying vec3 normals_face;
+
+uniform float sunAngle;
+uniform vec3 shadowLightPosition;
 
 //fix artifacts when colored shadows are enabled
 const bool shadowcolor0Nearest = true;
@@ -26,41 +30,51 @@ const bool shadowtex1Nearest = true;
 #include "/distort.glsl"
 
 void main() {
+	
 	vec4 color = texture2D(texture, texcoord) * glcolor;
 	vec2 lm = lmcoord;
-	if (shadowPos.w > 0.0) {
-		//surface is facing towards shadowLightPosition
-		#if COLORED_SHADOWS == 0
-			//for normal shadows, only consider the closest thing to the sun,
-			//regardless of whether or not it's opaque.
-			if (texture2D(shadowtex0, shadowPos.xy).r < shadowPos.z) {
-		#else
-			//for invisible and colored shadows, first check the closest OPAQUE thing to the sun.
-			if (texture2D(shadowtex1, shadowPos.xy).r < shadowPos.z) {
-		#endif
-			//surface is in shadows. reduce light level.
-			lm.y *= SHADOW_BRIGHTNESS;
-		}
-		else {
-			//surface is in direct sunlight. increase light level.
-			lm.y = mix(31.0 / 32.0 * SHADOW_BRIGHTNESS, 31.0 / 32.0, sqrt(shadowPos.w));
-			#if COLORED_SHADOWS == 1
-				//when colored shadows are enabled and there's nothing OPAQUE between us and the sun,
-				//perform a 2nd check to see if there's anything translucent between us and the sun.
+
+	#if LIGHTING_STYLES == 0
+		if (shadowPos.w > 0.0) {
+			#if COLORED_SHADOWS == 0
 				if (texture2D(shadowtex0, shadowPos.xy).r < shadowPos.z) {
-					//surface has translucent object between it and the sun. modify its color.
-					//if the block light is high, modify the color less.
-					vec4 shadowLightColor = texture2D(shadowcolor0, shadowPos.xy);
-					//make colors more intense when the shadow light color is more opaque.
-					shadowLightColor.rgb = mix(vec3(1.0), shadowLightColor.rgb, shadowLightColor.a);
-					//also make colors less intense when the block light level is high.
-					shadowLightColor.rgb = mix(shadowLightColor.rgb, vec3(1.0), lm.x);
-					//apply the color.
-					color.rgb *= shadowLightColor.rgb;
-				}
+			#else
+				if (texture2D(shadowtex1, shadowPos.xy).r < shadowPos.z) {
 			#endif
+				lm.y *= SHADOW_BRIGHTNESS;
+			}
+			else {
+				lm.y = mix(31.0 / 32.0 * SHADOW_BRIGHTNESS, 31.0 / 32.0, sqrt(shadowPos.w));
+				#if COLORED_SHADOWS == 1
+					if (texture2D(shadowtex0, shadowPos.xy).r < shadowPos.z) {
+						vec4 shadowLightColor = texture2D(shadowcolor0, shadowPos.xy);
+						shadowLightColor.rgb = mix(vec3(1.0), shadowLightColor.rgb, shadowLightColor.a);
+						color.rgb *= shadowLightColor.rgb;
+					}
+			#endif
+			}
 		}
-	}
+	#endif
+
+	vec3 fire_color = vec3(1., 1., 0.);
+	vec3 sky_color = vec3(0., 0., 1.);
+
+	#if LIGHTING_STYLES == 1
+		if (sunAngle > 0.5)
+		{
+			sky_color = vec3(0.);
+		}
+
+		color.rgb = color.rgb * (fire_color * lm.x + sky_color * lm.y); 
+	#endif
+
+	float lightDot = clamp(dot(normalize(shadowLightPosition), normals_face), 0., 1.);
+	color.rgb = color.rgb * (
+		fire_color * lm.x
+		+ texture2D(lightmap, lm).y * lm.y
+		+ lightDot
+	);
+
 	color *= texture2D(lightmap, lm);
 
 	#if BERSEK_MOD == 1
