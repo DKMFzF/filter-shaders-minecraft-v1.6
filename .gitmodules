@@ -1,0 +1,3 @@
+[submodule "filter-shader-documentation"]
+	path = filter-shader-documentation
+	url = https://github.com/DKMFzF/filter-shader-documentation.git
