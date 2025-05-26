@@ -61,6 +61,6 @@ void main() {
 	}
 	color *= texture2D(lightmap, lm);
 
-/* DRAWBUFFERS:0 */
+	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = color; //gcolor
 }
