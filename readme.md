@@ -16,22 +16,22 @@ The shader implements
 ![](https://raw.githubusercontent.com/DKMFzF/filter-shader-documentation/a4ae79ddc212be3639b5a815254e71e16832cd29/docs/sepia.png)
 
 ## Black and white filter
-![](./filter-shader-documentation/docs/gray.png)
+![](https://raw.githubusercontent.com/DKMFzF/filter-shader-documentation/a4ae79ddc212be3639b5a815254e71e16832cd29/docs/gray.png)
 
 ## Invert
-![](./filter-shader-documentation/docs/invert.png)
+![](https://raw.githubusercontent.com/DKMFzF/filter-shader-documentation/a4ae79ddc212be3639b5a815254e71e16832cd29/docs/invert.png)
 
 ## Grain
-![](./filter-shader-documentation/docs/grain.png)
+![](https://raw.githubusercontent.com/DKMFzF/filter-shader-documentation/a4ae79ddc212be3639b5a815254e71e16832cd29/docs/grain.png)
 
 ## Contrast
-![](./filter-shader-documentation/docs/contrast.png)
+![](https://raw.githubusercontent.com/DKMFzF/filter-shader-documentation/a4ae79ddc212be3639b5a815254e71e16832cd29/docs/contrast.png)
 
 ## Brightness
-![](./filter-shader-documentation/docs/brightness.png)
+![](https://raw.githubusercontent.com/DKMFzF/filter-shader-documentation/a4ae79ddc212be3639b5a815254e71e16832cd29/docs/brightness.png)
 
 ## Saturation
-![](./filter-shader-documentation/docs/saturation.png)
+![](https://raw.githubusercontent.com/DKMFzF/filter-shader-documentation/a4ae79ddc212be3639b5a815254e71e16832cd29/docs/saturation.png)
 
 ## Blur
-![](./filter-shader-documentation/docs/blur.png)
+![](https://raw.githubusercontent.com/DKMFzF/filter-shader-documentation/a4ae79ddc212be3639b5a815254e71e16832cd29/docs/blur.png)
