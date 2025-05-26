@@ -36,7 +36,7 @@ void main()
 		color = calcSkyColor(normalize(pos.xyz));
 	}
 
-	if (SKY_DARK == 1) color = vec3(0.);
+	if (BERSEK_MOD == 1) color = vec3(0.);
 
 /* DRAWBUFFERS:0 */
 	gl_FragData[0] = vec4(color, 1.0); //gcolor

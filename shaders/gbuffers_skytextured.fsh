@@ -11,7 +11,7 @@ void main()
 {
 	vec4 color = texture2D(texture, texcoord) * glcolor;
 
-	#if RED_SUN == 1
+	#if BERSEK_MOD == 1
 		color.b = 0.;
 		color.g = 0.;
 	#endif

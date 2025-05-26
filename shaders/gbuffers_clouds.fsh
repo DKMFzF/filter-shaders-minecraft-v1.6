@@ -10,7 +10,7 @@ varying vec4 glcolor;
 void main() {
 	vec4 color = texture2D(texture, texcoord) * glcolor;
 
-	#if RED_CLOUDS == 1
+	#if BERSEK_MOD == 1
 		color.rgb = mix(color.rgb, vec3(1., 0., 0.), 0.5);
 	#endif
 
