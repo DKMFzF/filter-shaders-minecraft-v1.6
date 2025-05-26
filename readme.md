@@ -13,7 +13,7 @@ The shader implements
 '
 
 ## Sepia
-![](./filter-shader-documentation/docs/sepia.png)
+![](https://raw.githubusercontent.com/DKMFzF/filter-shader-documentation/a4ae79ddc212be3639b5a815254e71e16832cd29/docs/sepia.png)
 
 ## Black and white filter
 ![](./filter-shader-documentation/docs/gray.png)
