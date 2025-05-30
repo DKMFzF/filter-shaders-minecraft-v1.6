@@ -13,5 +13,5 @@ The shader implements
 
 ## Documentation
 
-- Functions in the Shader
-  - [All filters available in shaders](https://raw.githubusercontent.com/DKMFzF/filter-shader-documentation/a4ae79ddc212be3639b5a815254e71e16832cd29/all-filters-available-in-shaders.md)
+- Components in the Shader
+  - [All filters available in shaders](https://github.com/DKMFzF/filter-shader-documentation/blob/8b556f07d11d6196f0be8ff39af78dc3dbec59c4/docs/all-filters-available-in-shaders.md)
