@@ -1,6 +1,6 @@
 # Lightweight maincraft filter shaders
 
-![](https://github.com/DKMFzF/filter-shader-documentation/blob/277745fa1a296b5312340d641315fc62458ed85f/img/screenshot1.png)
+![](https://github.com/DKMFzF/filter-shader-documentation/blob/d35d35edc7438dc8679eabd178adbf2f8a95bfd1/img/screenshot1.png)
 
 The shader implements 
 - primitive shadows
