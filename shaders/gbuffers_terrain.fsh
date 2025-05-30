@@ -56,7 +56,7 @@ void main() {
 		}
 	#endif
 
-	vec3 fire_color = vec3(1., 1., 0.);
+	vec3 fire_color = vec3(0.25, 0.25, 0.);
 	vec3 sky_color = vec3(0., 0., 1.);
 
 	#if LIGHTING_STYLES == 1
@@ -75,12 +75,12 @@ void main() {
 		+ lightDot
 	);
 
-	color *= texture2D(lightmap, lm);
-
 	#if BERSEK_MOD == 1
 		float average_color = (color.r + color.b + color.g) / 3.0;
 		color.rgb = mix(color.rgb, vec3(average_color), 1.0);
 	#endif
+
+	color *= texture2D(lightmap, lm);
 
 	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = color; //gcolor
