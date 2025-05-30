@@ -16,7 +16,7 @@ The shader implements
 ## Documentation
 
 - Components in the Shader
-  - [All filters available in shaders](https://github.com/DKMFzF/filter-shader-documentation/blob/277745fa1a296b5312340d641315fc62458ed85f/docs/all-filters-available-in-shaders.md)
+  - [All filters available in shaders](https://github.com/DKMFzF/filter-shader-documentation/blob/277745fa1a296b5312340d641315fc62458ed85f/docs/all-filters-available-in-shaders.md) (added in [v1.0](https://github.com/DKMFzF/filter-shader-documentation/blob/277745fa1a296b5312340d641315fc62458ed85f/docs/all-filters-available-in-shaders.md))
     - [Color Mixing Utility](https://github.com/DKMFzF/filter-shader-documentation/blob/277745fa1a296b5312340d641315fc62458ed85f/docs/all-filters-available-in-shaders.md#color-mixing-utility)
     - [Sepia Tone](https://github.com/DKMFzF/filter-shader-documentation/blob/277745fa1a296b5312340d641315fc62458ed85f/docs/all-filters-available-in-shaders.md#sepia-tone)
     - [Grayscale Conversion](https://github.com/DKMFzF/filter-shader-documentation/blob/277745fa1a296b5312340d641315fc62458ed85f/docs/all-filters-available-in-shaders.md#grayscale-conversion)
@@ -26,3 +26,4 @@ The shader implements
     - [Brightness Adjustment](https://github.com/DKMFzF/filter-shader-documentation/blob/277745fa1a296b5312340d641315fc62458ed85f/docs/all-filters-available-in-shaders.md#brightness-adjustment)
     - [Saturation Control](https://github.com/DKMFzF/filter-shader-documentation/blob/277745fa1a296b5312340d641315fc62458ed85f/docs/all-filters-available-in-shaders.md#saturation-control)
     - [Selective Blur](https://github.com/DKMFzF/filter-shader-documentation/blob/277745fa1a296b5312340d641315fc62458ed85f/docs/all-filters-available-in-shaders.md#selective-blur)
+  - [All filters available in shaders](https://github.com/DKMFzF/filter-shader-documentation/blob/80f48f2a3b4ed8bc076c2cd2d9e7d66b5d31e14b/docs/ambient-lighting.md) (added in [v1.2](https://github.com/DKMFzF/filter-shader-documentation/blob/80f48f2a3b4ed8bc076c2cd2d9e7d66b5d31e14b/CHANGELOG/v1.1/README.md))
