@@ -1,4 +1,4 @@
-# Lightweight maincraft filter shaders
+# Lightweight minecraft filter shaders
 
 ![](https://github.com/DKMFzF/filter-shader-documentation/blob/d35d35edc7438dc8679eabd178adbf2f8a95bfd1/img/screenshot1.png)
 
