@@ -24,7 +24,6 @@ uniform float frameTimeCounter;
 uniform float rainStrength;
 uniform int heldBlockLightValue;
 
-// Calculate Time of Day.
 float time = worldTime;
 float TimeSunrise		= ((clamp(time, 23000.0, 24000.0) - 23000.0) / 1000.0) + (1.0 - (clamp(time, 0.0, 3000.0)/3000.0));
 float TimeNoon			= ((clamp(time, 0.0, 3000.0)) / 3000.0) - ((clamp(time, 9000.0, 12000.0) - 9000.0) / 3000.0);

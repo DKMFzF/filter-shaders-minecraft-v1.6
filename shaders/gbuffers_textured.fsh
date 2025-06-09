@@ -35,7 +35,6 @@ uniform float rainStrength;
 uniform int heldBlockLightValue;
 uniform int isEyeInWater;
 
-// Calculate Time of Day.
 float time = worldTime;
 float TimeSunrise		= ((clamp(time, 23000.0, 24000.0) - 23000.0) / 1000.0) + (1.0 - (clamp(time, 0.0, 3000.0)/3000.0));
 float TimeNoon			= ((clamp(time, 0.0, 3000.0)) / 3000.0) - ((clamp(time, 9000.0, 12000.0) - 9000.0) / 3000.0);
@@ -69,11 +68,9 @@ void main() {
 	vec4 fragposition	= gbufferProjectionInverse * (vec4(gl_FragCoord.xy / vec2(viewWidth, viewHeight), gl_FragCoord.z, 1.0) * 2.0 - 1.0);
 	vec4 worldposition	= gbufferModelViewInverse * fragposition;
 
-	// Adjustable variables.
 	float ambientStrength		= 0.8;
 	float sunlightStrength		= 1.3;
 
-	// Set up colors.
 	vec3 ambient_Color  = vec3(0.0);
 		 ambient_Color += vec3(0.75, 0.8, 1.0)	* 0.6	* TimeSunrise;
 		 ambient_Color += vec3(0.75, 0.8, 1.0)			* TimeNoon;
@@ -96,7 +93,6 @@ void main() {
 		 
 	vec3 torch_Color = vec3(1.0, 0.65, 0.4);
 
-	// Desature ambient color at nighttime.
 	float saturation = (1.0 - TimeMidnight * 0.5) + (torchLightmap * TimeMidnight * 0.5);
 	float luma = dot(baseColor.rgb, vec3(1.0));
 	vec3 chroma = baseColor.rgb - luma;
