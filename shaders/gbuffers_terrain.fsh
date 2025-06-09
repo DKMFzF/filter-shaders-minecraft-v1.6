@@ -20,6 +20,14 @@ varying vec3 normals_face;
 uniform float sunAngle;
 uniform vec3 shadowLightPosition;
 
+// added fog
+uniform float fogStart;
+uniform float fogEnd;
+uniform vec3 fogColor;
+uniform float far;
+
+varying vec3 viewPos_v3;
+
 //fix artifacts when colored shadows are enabled
 const bool shadowcolor0Nearest = true;
 const bool shadowtex0Nearest = true;
@@ -73,6 +81,19 @@ void main() {
 		fire_color * lm.x
 		+ texture2D(lightmap, lm).y * lm.y
 		+ lightDot
+	);
+
+	// fog color (far)
+	float fog_amount_border = clamp((length(viewPos_v3) - (FOG_BORDER_START * far)) / ((1. - FOG_BORDER_START) * far), 0., 1.);
+	float fog_amount = max(
+		clamp((length(viewPos_v3) - FOG_START) / (FOG_END - FOG_START), 0., 1.),
+		fog_amount_border
+	);
+
+	color.rgb = mix(
+		color.rgb,
+		mix(fogColor.rgb, vec3(color.b), 0.3),
+		(fog_amount / 2)
 	);
 
 	#if BERSEK_MOD == 1
