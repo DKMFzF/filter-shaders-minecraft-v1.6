@@ -1,60 +1,118 @@
 #version 120
 
-#define COLORED_SHADOWS 1 //0: Stained glass will cast ordinary shadows. 1: Stained glass will cast colored shadows. 2: Stained glass will not cast any shadows. [0 1 2]
-#define SHADOW_BRIGHTNESS 0.75 //Light levels are multiplied by this number when the surface is in shadows [0.00 0.05 0.10 0.15 0.20 0.25 0.30 0.35 0.40 0.45 0.50 0.55 0.60 0.65 0.70 0.75 0.80 0.85 0.90 0.95 1.00]
 
-uniform sampler2D lightmap;
-uniform sampler2D shadowcolor0;
-uniform sampler2D shadowtex0;
-uniform sampler2D shadowtex1;
-uniform sampler2D texture;
+#define	useDynamicTonemapping
 
-varying vec2 lmcoord;
+varying vec4 color;
+varying vec3 normal;
 varying vec2 texcoord;
-varying vec4 glcolor;
-varying vec3 shadowPos; //normals don't exist for particles
+varying float weatherRatio;
+varying float skyLightmap;
+varying float torchLightmap;
 
-//fix artifacts when colored shadows are enabled
-const bool shadowcolor0Nearest = true;
-const bool shadowtex0Nearest = true;
-const bool shadowtex1Nearest = true;
+uniform sampler2D texture;
+uniform sampler2DShadow shadow;
+
+uniform mat4 gbufferProjection;
+uniform mat4 gbufferProjectionInverse;
+uniform mat4 gbufferModelViewInverse;
+uniform mat4 gbufferModelView;
+uniform mat4 shadowProjection;
+uniform mat4 shadowModelView;
+
+uniform ivec2 eyeBrightnessSmooth;
+
+uniform vec3 sunPosition;
+uniform vec3 moonPosition;
+uniform vec3 upPosition;
+uniform int fogMode;
+uniform int worldTime;
+uniform float wetness;
+uniform float viewWidth;
+uniform float viewHeight;
+uniform float rainStrength;
+
+uniform int heldBlockLightValue;
+uniform int isEyeInWater;
+
+// Calculate Time of Day.
+float time = worldTime;
+float TimeSunrise		= ((clamp(time, 23000.0, 24000.0) - 23000.0) / 1000.0) + (1.0 - (clamp(time, 0.0, 3000.0)/3000.0));
+float TimeNoon			= ((clamp(time, 0.0, 3000.0)) / 3000.0) - ((clamp(time, 9000.0, 12000.0) - 9000.0) / 3000.0);
+float TimeSunset		= ((clamp(time, 9000.0, 12000.0) - 9000.0) / 3000.0) - ((clamp(time, 12000.0, 12750.0) - 12000.0) / 750.0);
+float TimeMidnight		= ((clamp(time, 12000.0, 12750.0) - 12000.0) / 750.0) - ((clamp(time, 23000.0, 24000.0) - 23000.0) / 1000.0);
+float TimeDay			= TimeSunrise + TimeNoon + TimeSunset;
+float DayToNightFading	= 1.0 - (clamp((time - 12000.0) / 300.0, 0.0, 1.0) - clamp((time - 13000.0) / 300.0, 0.0, 1.0)
+							  +  clamp((time - 22800.0) / 200.0, 0.0, 1.0) - clamp((time - 23400.0) / 200.0, 0.0, 1.0));
+
+float dynamicTonemapping(float exposureStrength, bool reserveLightmap, bool addExposure, bool dayOnly) {
+
+	float dTonemap = 1.0;
+
+	#ifdef useDynamicTonemapping
+	
+		float dTlightmap	= pow(eyeBrightnessSmooth.y / 240.0, 2.0);		if (reserveLightmap)	dTlightmap 	= 1.0 - dTlightmap;
+			  dTonemap		= dTlightmap * exposureStrength;				if (addExposure)		dTonemap	= 1.0 + dTonemap;		if (dayOnly)	dTonemap = mix(dTonemap, 1.0, TimeMidnight);	// Full exposure on midnight.
+
+	#endif
+	
+	return dTonemap;
+
+}
+
 
 void main() {
-	vec4 color = texture2D(texture, texcoord) * glcolor;
-	vec2 lm = lmcoord;
 
-	#if COLORED_SHADOWS == 0
-		//for normal shadows, only consider the closest thing to the sun,
-		//regardless of whether or not it's opaque.
-		if (texture2D(shadowtex0, shadowPos.xy).r < shadowPos.z) {
-	#else
-		//for invisible and colored shadows, first check the closest OPAQUE thing to the sun.
-		if (texture2D(shadowtex1, shadowPos.xy).r < shadowPos.z) {
-	#endif
-		//surface is in shadows. reduce light level.
-		lm.y *= SHADOW_BRIGHTNESS;
-	}
-	else {
-		//surface is in direct sunlight. increase light level.
-		lm.y = 31.0 / 32.0;
-		#if COLORED_SHADOWS == 1
-			//when colored shadows are enabled and there's nothing OPAQUE between us and the sun,
-			//perform a 2nd check to see if there's anything translucent between us and the sun.
-			if (texture2D(shadowtex0, shadowPos.xy).r < shadowPos.z) {
-				//surface has translucent object between it and the sun. modify its color.
-				//if the block light is high, modify the color less.
-				vec4 shadowLightColor = texture2D(shadowcolor0, shadowPos.xy);
-				//make colors more intense when the shadow light color is more opaque.
-				shadowLightColor.rgb = mix(vec3(1.0), shadowLightColor.rgb, shadowLightColor.a);
-				//also make colors less intense when the block light level is high.
-				shadowLightColor.rgb = mix(shadowLightColor.rgb, vec3(1.0), lm.x);
-				//apply the color.
-				color.rgb *= shadowLightColor.rgb;
-			}
-		#endif
-	}
-	color *= texture2D(lightmap, lm);
+	vec4 baseColor = texture2D(texture, texcoord.xy) * color;
 
-/* DRAWBUFFERS:0 */
-	gl_FragData[0] = color; //gcolor
+
+	vec4 fragposition	= gbufferProjectionInverse * (vec4(gl_FragCoord.xy / vec2(viewWidth, viewHeight), gl_FragCoord.z, 1.0) * 2.0 - 1.0);
+	vec4 worldposition	= gbufferModelViewInverse * fragposition;
+
+	// Adjustable variables.
+	float ambientStrength		= 0.8;
+	float sunlightStrength		= 1.3;
+
+	// Set up colors.
+	vec3 ambient_Color  = vec3(0.0);
+		 ambient_Color += vec3(0.75, 0.8, 1.0)	* 0.6	* TimeSunrise;
+		 ambient_Color += vec3(0.75, 0.8, 1.0)			* TimeNoon;
+		 ambient_Color += vec3(0.75, 0.8, 1.0)	* 0.6	* TimeSunset;
+		 ambient_Color += vec3(0.6, 0.75, 1.0)	* 0.13	* TimeMidnight;
+
+		 ambient_Color *= 1.0 - weatherRatio;
+		 ambient_Color += vec3(0.75, 0.8, 1.0)			* TimeSunrise	* weatherRatio;
+		 ambient_Color += vec3(0.75, 0.8, 1.0)			* TimeNoon		* weatherRatio;
+		 ambient_Color += vec3(0.75, 0.8, 1.0)			* TimeSunset	* weatherRatio;
+		 ambient_Color += vec3(0.6, 0.75, 1.0)	* 0.13 	* TimeMidnight	* weatherRatio;
+
+	vec3 sunlight_Color  = vec3(0.0);
+		 sunlight_Color += vec3(1.0, 0.7, 0.5)	* 0.6	* TimeSunrise;
+		 sunlight_Color += vec3(1.0, 0.9, 0.8)			* TimeNoon;
+		 sunlight_Color += vec3(1.0, 0.7, 0.5)	* 0.6	* TimeSunset;
+		 sunlight_Color += vec3(0.6, 0.75, 1.0)	* 0.05	* TimeMidnight;
+		 sunlight_Color *= DayToNightFading;
+		 sunlight_Color *= 1.0 - weatherRatio;
+		 
+	vec3 torch_Color = vec3(1.0, 0.65, 0.4);
+
+	// Desature ambient color at nighttime.
+	float saturation = (1.0 - TimeMidnight * 0.5) + (torchLightmap * TimeMidnight * 0.5);
+	float luma = dot(baseColor.rgb, vec3(1.0));
+	vec3 chroma = baseColor.rgb - luma;
+	vec3 noLight = (chroma * saturation) + luma;
+
+	vec3 newTorchLightmap	= baseColor.rgb * torch_Color * torchLightmap;
+	vec3 ambientLightmap	= noLight.rgb * ambient_Color * ambientStrength;
+	vec3 sunlightLightmap	= noLight.rgb * sunlight_Color;
+
+	ambientLightmap		   *= dynamicTonemapping(0.75, true, true, true);
+	sunlightLightmap	   *= dynamicTonemapping(0.75, true, true, true);
+
+	vec3 newLightmap		= skyLightmap + newTorchLightmap;
+
+/* DRAWBUFFERS:01 */
+
+	gl_FragData[0] = vec4(newLightmap, baseColor.a);
+
 }

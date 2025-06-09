@@ -1,13 +1,16 @@
 #version 120
 
 uniform sampler2D texture;
+uniform sampler2D lightmap;
 
-varying vec2 texcoord;
-varying vec4 glcolor;
+varying vec4 color;
+varying vec4 texcoord;
+varying vec4 lmcoord;
 
 void main() {
-	vec4 color = texture2D(texture, texcoord) * glcolor;
 
-/* DRAWBUFFERS:0 */
-	gl_FragData[0] = color; //gcolor
+/* DRAWBUFFERS:7 */
+
+	gl_FragData[0] = texture2D(texture, texcoord.st) * color;
+
 }

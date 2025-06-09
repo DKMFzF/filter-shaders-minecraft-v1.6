@@ -27,6 +27,12 @@
 
 // lighting vars
 #define LIGHTING_STYLES 0 // [0 1 2]
+
+// shadow
+#define SHADOW_BRIGHTNESS 0.60 // [0.00 0.05 0.10 0.15 0.20 0.25 0.30 0.35 0.40 0.45 0.50 0.55 0.60 0.65 0.70 0.75 0.80 0.85 0.90 0.95 1.00]
+#define COLORED_SHADOWS 1 // [0 1 2]
+
+// fog
 #define FOG_START 70.0 // [10.0 20.0 30.0 40.0 50.0 60.0 70.0 80.0 90.0 100.0 150.0 200.0 250.0]
 #define FOG_END 250.0 // [10.0 20.0 30.0 40.0 50.0 60.0 70.0 80.0 90.0 150.0 200.0 250.0]
 #define FOG_BORDER_START 0.75 // [0.75 0.8 0.9]
