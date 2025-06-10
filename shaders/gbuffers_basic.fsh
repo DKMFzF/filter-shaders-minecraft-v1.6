@@ -1,22 +1,5 @@
 #version 120
 
-/*
-
-	##########	##########	##########	##########	##
-	##				##		##		##	##		##	##
-	##				##		##		##	##		##	##
-	##########		##		##		##	##########	##
-			##		##		##		##	##			##
-			##		##		##		##	##
-	##########		##		##########	##			##
-
-Before you do anything here, make sure you've read my agreement!
-
-Otherwise, notice that you are ONLY allowed to modify my shaderpack
-for your OWN USE!
-
-*/
-
 //#define depthOfField
 #define	useDynamicTonemapping
 
