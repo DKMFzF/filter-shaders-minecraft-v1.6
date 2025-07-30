@@ -27,4 +27,5 @@ The shader implements
     - [Saturation Control](https://github.com/DKMFzF/filter-shader-documentation/blob/80f48f2a3b4ed8bc076c2cd2d9e7d66b5d31e14b/docs/all-filters-available-in-shaders.md#saturation-control)
     - [Selective Blur](https://github.com/DKMFzF/filter-shader-documentation/blob/80f48f2a3b4ed8bc076c2cd2d9e7d66b5d31e14b/docs/all-filters-available-in-shaders.md#selective-blur)
   - [Ambient lighting](https://github.com/DKMFzF/filter-shader-documentation/blob/80f48f2a3b4ed8bc076c2cd2d9e7d66b5d31e14b/docs/ambient-lighting.md) (added in [v1.1](https://github.com/DKMFzF/filter-shader-documentation/blob/80f48f2a3b4ed8bc076c2cd2d9e7d66b5d31e14b/CHANGELOG/v1.1/README.md))
-s
+  - [Underwater Effect](https://github.com/DKMFzF/filter-shader-documentation/tree/main/CHANGELOG/v1.7)
+  - [Sun Glare](https://github.com/DKMFzF/filter-shader-documentation/blob/main/CHANGELOG/v1.8/README.md)
